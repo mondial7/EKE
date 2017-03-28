@@ -1,0 +1,58 @@
+<header>
+
+	<div class="logo">
+    	<a href="" title="Home">
+        	<img alt="EKE" src="app/assets/pics/logos/eke_logo.svg" />
+    	</a>
+    </div>
+
+    <nav class="menu">
+
+    	<div id="mobile_menu__button" class="mobile_menu__button" onclick="Sp.layout.toggleMobileMenu()">
+    		<div></div>
+            <div></div>
+            <div></div>
+    	</div>
+
+    	<ul class="menu_list menu_list--hide" id="menu_list" data-mobile="0">
+
+            {% for item in menu %}
+
+                <li class="menu_link--top {{ item.active_class }}">
+                    <a href="{{ item.link }}" 
+                       {% if item.link_class %} class="{{ item.link_class }}" {% endif %}
+                       title="{{ item.label }}">{{ item.label }}</a>
+                </li>
+
+            {% endfor %}
+
+            {% if submenu is defined and submenu %}
+
+                <li class="menu_link submenu_trigger">
+                    {% set avatar = sess.avatar ?: "avatar.svg" %}
+            		<div class="menu_profile_picture" 
+                         style="background-image: url('show/people-profile/img/{{ avatar }}')">
+            			<a href="people/{{ sess.id }}">
+                            <div class="role_filter--{{ sess.role }}"></div>
+                        </a>
+            		</div> 
+            		<ul class="submenu">
+                        
+                        {% for item in submenu %}
+                            <li class="menu_link--sub">
+                                <a href="{{ item.link }}" title="item.label">{{ item.label }}</a>
+                            </li>
+                        {% endfor %}
+
+        			</ul>
+            	</li>
+
+            {% endif %}
+
+		</ul>
+
+    </nav>
+        
+    <div class="header_separator"></div>
+
+</header>

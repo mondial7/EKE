@@ -1,0 +1,23 @@
+{# 
+ # Error page content section
+ #}
+
+
+{% macro error_page( message ) %}
+	
+	<style>
+	.error_page { text-align: center; display: flex; }
+	.error_page__content { flex: 1; }
+	.error_page__content > h3 { margin: 0px; padding: 25px; color: #444; font-style: italic; font-size: 150px }
+	</style>
+
+	<section class="error_page">
+		
+		<div class="error_page__content">
+			<h3>404</h3>
+			<p>{{ message }}</p>
+		</div>
+
+	</section>
+
+{% endmacro %}

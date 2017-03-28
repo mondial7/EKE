@@ -1,0 +1,104 @@
+{# 
+ # Settings inputs
+ # for an async architecture
+ # -> each input has a save button
+ #}
+
+
+{% macro saver(id) %}
+	
+	<div class="settings__input__saver">
+		
+		<input type="button"
+		       class="settings__input__save_button"
+	 	       data-for="{{ id }}"
+	 	       id="saver_button_{{ id }}"
+		       value="Save"
+		       disabled="">
+
+		<div class="tiny_loader" 
+		     style="display:none" 
+		     id="{{ id }}_loader">
+			<div></div><div></div>
+		</div>
+
+	</div>
+
+{% endmacro %}
+
+
+
+{% macro input(name, id, value, type) %}
+
+	{% import _self as helpers %}
+
+	<div class="settings__input">
+
+		<label for="{{ id }}">{{ name|upper }}:</label>
+
+		<input type="{{ type|default('text') }}" 
+		       class="settings__input__content" 
+		       id="{{ id }}"
+		       name="{{ name }}"
+		       value="{{ value }}"
+		       placeholder="{{ value }}" />
+
+		{{ helpers.saver(id) }}
+
+	</div>
+
+{% endmacro %}
+
+
+
+{% macro textarea(name, id, value) %}
+
+	{% import _self as helpers %}
+
+	<div class="settings__input">
+
+		<label for="{{ id }}">{{ name|upper }}:</label>
+
+		<textarea class="settings__input__content"
+				  name="{{ name }}"
+		          id="{{ id }}">{{ value }}</textarea>
+		
+		{{ helpers.saver(id) }}
+
+	</div>
+
+{% endmacro %}
+
+
+{% macro fileinput(title, name, id, value, accept, form_id) %}
+
+	<form action="app/controllers/{{ controller }}" method="post" class="form_custom" enctype="multipart/form-data" onsubmit="return upload_form_submit();" target="notification_box" id="{{ form_id }}">
+	    
+	    <li class="form_box_item form_box_item--full">
+	    	<h4>{{ title }}</h4>
+	    </li>
+
+	    <li class="form_box_item">
+	        <label for="{{ id }}" style="cursor:pointer"><img src="{{ value }}" id="target_picture" alt="{{ name|upper }}" style="max-height:200px;max-width:200px" /></label>
+
+	        <input class="form_pretty_button_input" 
+	               style="cursor:pointer" 
+	               type="file" 
+	               accept="{{ accept|default('*/*') }}" 
+	               name="{{ name }}"
+	               id="{{ id }}">
+		
+		</li>
+		
+		<br>
+
+	    <li class="form_box_item">
+	    	<input class="form_pretty_button_input" type="submit" value="Upload" name="picture_submit">
+	    </li>
+	
+	</form>
+
+	{# Need for async uploads, and used as upload notification box #}
+	<iframe id="notification_box" name="notification_box" style="display:none" src=""></iframe>
+
+{% endmacro %}

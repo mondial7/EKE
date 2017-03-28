@@ -1,0 +1,33 @@
+{# static metatag - each page #}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<base href="{{ website_url|default('https://eke.mondspace.com/') }}">
+
+<meta charset="UTF-8">
+
+{# Temporary #}
+<meta name="description" content="">
+
+{# dynamic metatags - customize for each page #}
+<title>{{ page_title }}</title>
+
+{# Meta and Links tags #}
+
+{% for item in metatags %}
+	{% if item.kind == "link" %}
+		<link href="{{ item.href }}" rel="{{ item.rel }}" type="{{ item.type }}" media="all">
+	{% else %}
+		<meta name="{{ item.name }}" content="{{ item.content }}">
+	{% endif %}
+{% endfor %}
+
+{# For web components support #}
+
+{% for item in head_extra_script %}
+	<script src="{{ item.link }}" {% if item.async %}async{% endif %}></script>
+{% endfor %}
+
+
+{% for item in import_extra_html %}
+	<link rel="import" href="{{ item }}">
+{% endfor %}

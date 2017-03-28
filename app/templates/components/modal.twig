@@ -1,0 +1,29 @@
+{# Modal #}
+
+{% macro modal(id, content, wrapper_class) %}
+	
+<div class="sp_modal" id="{{ id }}">
+
+	<div class="center_column">
+		<div class="center_aligner">
+
+			<div class="background_close" onclick="Sp.hideModal({{ id }})"></div>
+
+			<div class="sp_modal__content">
+
+				<div class="_closer" onclick="Sp.hideModal({{ id }})">x</div>
+
+				<div class="{{ wrapper_class }}">
+
+					{{ content|raw }}
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+</div>
+
+{% endmacro %}

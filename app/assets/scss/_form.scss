@@ -1,0 +1,73 @@
+
+$form-shadow: $header-shadow;
+
+$form-font: $font-stack;
+
+form.form_custom {
+    max-width: 640px;
+    margin-bottom: 40px;
+    width: 100%;
+    background-color: white;
+    //@include box-shadow($form-shadow);
+    padding: 20px 15px;
+    color: #555;
+    text-align: left;
+    font-family: $form-font;
+
+    //box-shadow:         0 0 0 1px rgba(0, 0, 0, 0.1), 0 10px 35px 0 rgba(0, 0, 0, 0.5);
+}
+
+.form_box_item {    
+    display: inline-block;
+    padding: 14px 10px;
+    min-width: 300px;
+    
+    > label {
+        display: block;
+        margin: auto;
+        margin-bottom: 5px;
+    }
+}
+
+.form_box_item--full {
+    width: 100%
+}
+
+.form_pretty_general_input {
+    border: none;
+    width: 250px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #f2f2f2;
+    padding: 7px;
+}
+
+textarea.form_pretty_general_input {
+    height: auto;
+}
+
+.form_pretty_button_input {
+    @extend .st_button;
+    border: none;
+    @include transition(300ms);  
+
+    &:hover { 
+        @include bright(120%);  
+    }
+
+
+
+}
+
+.form_pretty_button_link {
+    color: $logo-brown;
+    padding: 5px;
+    @inlcude border-radius(3px);
+
+  &.form_input--forgot_password {
+    //background-color: #f2f2f2;
+    color: $logo-red;
+    font-size: 12px;
+    display: inline-block;
+  }
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	{% block metatag %}
+		{% include './page/page__metatags.twig' %}
+	{% endblock %}
+
+</head>
+<body>
+
+
+	{% block header %}
+		{% include './page/page__header.twig' %}
+	{% endblock %}
+
+
+	{% block main %}
+		<main>
+			{# hint: include 404 page as default #}
+		</main>
+	{% endblock %}
+
+
+	{% block footer %}
+		{% include './page/page__footer.twig' %}
+	{% endblock %}
+
+
+</body>
+</html>

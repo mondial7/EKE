@@ -1,0 +1,8 @@
+RewriteEngine on
+
+# Avoid redirect of static resources
+RewriteRule ^app/assets - [L]
+
+# Redirect all the traffic to the 
+# Front Controller - /index.php
+RewriteRule ^ index.php [QSA,L]
