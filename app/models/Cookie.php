@@ -8,11 +8,20 @@ class Cookie {
     /**
      * @var string perma login key
      */
-    private static $permalogin = SP_CLIENT . 'log';
-
+    private static $permalogin;
 
     /**
-     * Add new cookie variable 
+     * Initialize static variables
+     * @return void
+     */
+    public static function init(){
+
+      self::$permalogin = md5($_SERVER['REMOTE_ADDR'] . '_log');
+
+    }
+
+    /**
+     * Add new cookie variable
      *
      * @param mixed key
      * @param mixed value
@@ -21,7 +30,7 @@ class Cookie {
      * @return string cookie token
      */
     public static function add($key, $value, $days = 90, $path = "/"){
-        
+
         setcookie($key, $value, time() + (86400 * $days), "/");
 
         return $value;
@@ -35,7 +44,7 @@ class Cookie {
      * @return boolean
      */
     public static function remove($key){
-        
+
         return setcookie($key, "", time() - 3600, "/");
 
     }
@@ -47,7 +56,7 @@ class Cookie {
      * @return boolean
      */
     public static function exists($key){
-        
+
         return isset($_COOKIE[$key]);
 
     }
@@ -59,9 +68,9 @@ class Cookie {
      * @return mixed
      */
     public static function get($key){
-        
+
         // Sintax valid since Php > 7.0
-        // use 
+        // use
         // isset($_SESSION[$key]) ? $_SESSION[$key] : null
         // for previous versions
         return $_COOKIE[$key] ?? null;
@@ -87,7 +96,7 @@ class Cookie {
      * @return string
      */
     public static function getPermaLogin(){
-        
+
         return self::get(self::$permalogin);
 
     }
@@ -99,7 +108,7 @@ class Cookie {
      * @return boolean
      */
     public static function removePermaLogin(){
-        
+
         return self::remove(self::$permalogin);
 
     }
@@ -107,7 +116,7 @@ class Cookie {
 
     /**
      * Generate a new cookie token
-     * 
+     *
      * the cookie is generated as the hash
      * of the account id, time and user_agent
      *
@@ -121,3 +130,7 @@ class Cookie {
     }
 
 }
+/**
+ * Initialize the static variables
+ */
+Cookie::init();

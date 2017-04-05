@@ -8,10 +8,10 @@
  * config.php { Global variables }
  * _functions.php { Controllers functions }
  * EKETwig.php { Twig Loader }
- * DB.php { Database connection class }
+ * EKEDB.php { Database connection class }
  * EKEModel.php { Abstract Model }
- * EKELog.php { Log Model } 
- * EKEMail.php { Log Model } 
+ * EKELog.php { Log Model }
+ * EKEMail.php { Log Model }
  * Dump_Router.php { Router class }
  *
  */
@@ -21,11 +21,11 @@ Class CoreLoader {
 	 * List of file to include
 	 * @var array[string]
 	 */
-	public final static $files = [
+	public static $files = [
 		'config/config.php',
 		'controller/_functions.php',
 		'controller/EKETwig.php',
-		'database/DB.php',
+		'database/EKEDB.php',
 		'model/EKELog.php',
 		'model/EKEMail.php',
 		'model/EKEModel.php',

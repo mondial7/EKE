@@ -2,7 +2,7 @@
 
 	<div class="logo">
     	<a href="" title="Home">
-        	<img alt="EKE" src="app/assets/pics/logos/eke_logo.svg" />
+        	<img alt="EKE" src="app/assets/pics/logos/eke_logo.png" />
     	</a>
     </div>
 
@@ -19,7 +19,7 @@
             {% for item in menu %}
 
                 <li class="menu_link--top {{ item.active_class }}">
-                    <a href="{{ item.link }}" 
+                    <a href="{{ item.link }}"
                        {% if item.link_class %} class="{{ item.link_class }}" {% endif %}
                        title="{{ item.label }}">{{ item.label }}</a>
                 </li>
@@ -30,14 +30,14 @@
 
                 <li class="menu_link submenu_trigger">
                     {% set avatar = sess.avatar ?: "avatar.svg" %}
-            		<div class="menu_profile_picture" 
+            		<div class="menu_profile_picture"
                          style="background-image: url('show/people-profile/img/{{ avatar }}')">
             			<a href="people/{{ sess.id }}">
                             <div class="role_filter--{{ sess.role }}"></div>
                         </a>
-            		</div> 
+            		</div>
             		<ul class="submenu">
-                        
+
                         {% for item in submenu %}
                             <li class="menu_link--sub">
                                 <a href="{{ item.link }}" title="item.label">{{ item.label }}</a>
@@ -52,7 +52,7 @@
 		</ul>
 
     </nav>
-        
+
     <div class="header_separator"></div>
 
 </header>

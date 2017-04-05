@@ -2,16 +2,16 @@
 
 /**
  * Render Twig Template
- * 
- * 
+ *
+ *
  * template_variables, @template_file are initialized in each view
- *  
+ *
  * template_variables has a default value of []
  * template_dir has a default value "../templates/"
 */
 class EKETwig
 {
-	
+
 	private static $template_variables = [];
 	private static $template_dir = null;
 	private static $twig;
@@ -23,13 +23,13 @@ class EKETwig
 
 		self::$template_dir = $template_dir;
 		self::load();
-	
+
 	}
 
 	public static function setVar($template_variables){
-	
+
 		self::$template_variables = $template_variables;
-	
+
 	}
 
 	/**
@@ -38,7 +38,7 @@ class EKETwig
 	public static function load(){
 
 		if (self::$template_dir == null) {
-			self::$template_dir = dirname(__DIR__) . "/templates/";
+			self::$template_dir = VIEWS_DIR;
 		}
 
 		self::init();
@@ -49,7 +49,7 @@ class EKETwig
 
 	/**
 	 * @template_variables, @template_dir are optional
-	 * 
+	 *
 	 * Return the redered template
 	 */
 	public static function render($template_file, $template_variables = null){
@@ -67,8 +67,8 @@ class EKETwig
 			self::setVar($template_variables);
 		}
 
-		self::$template = self::$twig->render($template_file, self::$template_variables);	
-	
+		self::$template = self::$twig->render($template_file, self::$template_variables);
+
 	}
 
 	/**
@@ -101,15 +101,15 @@ class EKETwig
 
 	/**
 	 * Instanziate twig with current options
-	 */		
+	 */
 	private static function init(){
 
+		// Register a new twig loader instance
+		//Twig_autoloader::register(); // Not used since you are using composer
 		// Requires composer autoload
 		require_once APP_DIR . '/vendor/autoload.php';
-		// Register a new twig loader instance
-		Twig_autoloader::register();
 		$loader = new Twig_Loader_Filesystem(self::$template_dir);
 		self::$twig = new Twig_Environment($loader);
-	
+
 	}
 }

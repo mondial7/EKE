@@ -1,82 +1,86 @@
 <?php
-/**
- * @todo avoid to execute a query to a specific db table from the core of framework
- */
 
+/**
+ * Log class
+ */
 class EKELog {
-	
-    /**
-     * Database connection
-     *
-     * @var Object mysqli
-     */
-    protected $db = null;
 
 	/**
 	 * @var string
 	 */
 	private $log_target,
-			$log_data;
+					$log_data;
+	/**
+	 * @var string log filename
+	 */
+	private $log_filename = 'log.txt';
+
+	/**
+	 * @var string log directory
+	 */
+	private $log_directory = CORE_DIR . '/';
+
+	/**
+	 * @var matrix array logs[]
+	 */
+	private $logs = [];
 
 	function __construct() {
 
-        // Declare database connection
-        $this->connectDB();
+		// Open log file
+		$this->loadLogs();
 
 	}
 
-    /**
-     * Declare a new connection to the database
-     *
-     * @return void
-     * 
-     */
-    private function connectDB(){
+	/**
+	 * Load logs array
+	 *
+	 * @return void
+	 */
+	private function loadLogs(){
 
-        // Prevent to open multiple connections
-        if (!isset($this->db)) {
+		$log_path = $this->log_directory . $this->log_filename;
 
-            // Get instance from db class
-            $db_instance =  DB::getInstance();
+		if (file_exists($log_path)) {
 
-            // Create a new connection
-            $this->db = $db_instance->connect();
-        
-        }
+			$contents = file_get_contents($log_path);
+			$this->logs = json_decode($contents, true);
 
-    }
+		}
 
-    /**
-     * Set target field
-     *
-     * @param string
-     * @return void
-     */
+	}
+
+  /**
+   * Set target field
+   *
+   * @param string
+   * @return void
+	 */
 	public function setTarget( $target ){
 
 		$this->log_target = $target;
 
 	}
 
-    /**
-     * Set data field
-     *
-     * @param array
-     * @return void
-     */
+  /**
+   * Set data field
+   *
+   * @param array
+   * @return void
+   */
 	public function setData( $data ){
 
 		$this->log_data = json_encode( $data );
 
 	}
 
-    /**
-     * Store target and data
-     *
-     * @param string (optional)
-     * @param array (optional)
-     * @return boolean of success state
-     */
+  /**
+   * Store target and data
+	 *
+   * @param string (optional)
+   * @param array (optional)
+   * @return boolean
+   */
 	public function save( $target = null, $data = null ){
 
 		if ($target) {
@@ -86,44 +90,61 @@ class EKELog {
 			$this->setData($data);
 		}
 
-        global $userLogged;
+    global $userLogged;
 
-        if ($userLogged) {
+    if ($userLogged) {
 
-            $user_logged = 1;
+        $user_logged = 1;
 
-        } else {
+    } else {
 
-            $user_logged = 0;
+        $user_logged = 0;
 
-        }
+    }
 
-        $ip = $_SERVER['REMOTE_ADDR'];
+		$log = [
+						'target' => $this->log_target,
+		 				'data' => $this->log_data,
+						'url' => $_SERVER['REQUEST_URI'],
+						'ip' => $_SERVER['REMOTE_ADDR'],
+						'user_logged' => $user_logged
+					 ];
 
-        $url = $_SERVER['REQUEST_URI'];
+    return $this->updateLogs($log);
 
-		$result = false;
+	}
 
-		$query = "INSERT INTO " . _T_LOG . " (target, data, url, ip, user_logged) VALUES ( ? , ? , ? , ? , ? );";
+	/**
+	 * Store new log on file
+	 *
+	 * @todo now the method is prone to cuncurrency issues and data loss
+	 *
+	 * @param array log
+	 * @return boolean
+	 */
+	private function updateLogs($log){
 
-        if ($stmt = $this->db->prepare($query)) {
-        
-            $stmt->bind_param('ssssi', $this->log_target, 
-                                       $this->log_data,
-                                       $url,
-                                       $ip,
-                                       $user_logged);
-            $stmt->execute();
+		// Open log file
+		$this->loadLogs();
 
-            if ($stmt->affected_rows == 1) {
-                $result = true;
-            }
+		// Append new log
+		$this->logs[] = $log;
 
-            $stmt->close();
-        
-        }
+		// Push new contents on the file
+		return $this->pushLogs();
 
-        return $result;
+	}
+
+	/**
+	 * Override the file with current logs contents
+	 *
+	 * @return boolean
+	 */
+	private function pushLogs(){
+
+		$log_path = $this->log_directory . $this->log_filename;
+
+		return file_put_contents($log_path, json_encode($this->logs));
 
 	}
 
