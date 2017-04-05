@@ -1,2 +1,4 @@
 app/vendor/
+app/core/log.txt
+
 .DS_Store
