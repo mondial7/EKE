@@ -24,11 +24,13 @@ Class CoreLoader {
 	public static $files = [
 		'config/config.php',
 		'controller/_functions.php',
+		'controller/EKEApiController.php',
 		'controller/EKETwig.php',
 		'database/EKEDB.php',
 		'model/EKELog.php',
 		'model/EKEMail.php',
 		'model/EKEModel.php',
+		'model/EKEEntityModel.php',
 		'router/Dump_Router.php'
 	];
 

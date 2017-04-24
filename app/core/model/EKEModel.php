@@ -1,5 +1,5 @@
 <?php
-        
+
 /**
  * Model class parent of all models
  */
@@ -27,12 +27,12 @@ abstract Class EKEModel {
         $this->LOG = new EKELog();
 
     }
- 
+
 
     function __destruct() {
 
     	$this->LOG = null;
-        
+
     }
 
 
@@ -40,7 +40,7 @@ abstract Class EKEModel {
      * Declare a new connection to the database
      *
      * @return void
-     * 
+     *
      */
     protected function connectDB(){
 
@@ -52,7 +52,7 @@ abstract Class EKEModel {
 
             // Create a new connection
             $this->db = $db_instance->connect();
-        
+
         }
 
     }
@@ -64,7 +64,7 @@ abstract Class EKEModel {
      *
      */
     protected function closeDB(){
-        
+
         // Close database connection if exists
         return (isset($this->db) && $this->db->close());
 
