@@ -48,6 +48,18 @@ abstract Class EKEApiController {
     }
 
     /**
+     * Format error message as json
+     *
+     * @param string
+     * @return string
+     */
+    protected function error($msg) {
+
+      return "{\"error\":\"$msg\"}";
+
+    }
+
+    /**
      * Print response
      */
     public function answer() {
