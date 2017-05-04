@@ -8,12 +8,14 @@
  * First level whitelist ('features whitelist')
  * Each feature has a folder in the API folder.
  */
-$feature_whitelist = ['blog'];
+$feature_whitelist = ['auth','search','blog'];
 /**
  * Actions whitelists
  * Each action is link to a feature: see variable names
  * The action name is the class name of the controller to be executed
  */
+$auth_whitelist = ['signin','signout','signup'];
+$auth_whitelist = ['users'];
 $blog_whitelist = ['articles'];
 
 /**
