@@ -13,12 +13,12 @@ class EKELog {
 	/**
 	 * @var string log filename
 	 */
-	private $log_filename = 'log.txt';
+	private $log_filename = 'log.json';
 
 	/**
 	 * @var string log directory
 	 */
-	private $log_directory = CORE_DIR . '/';
+	private $log_directory = CORE_DIR . '/logs/';
 
 	/**
 	 * @var matrix array logs[]
@@ -27,8 +27,7 @@ class EKELog {
 
 	function __construct() {
 
-		// Open log file
-		$this->loadLogs();
+		$this->log_filename = date('d_m_y') . '_log.json';
 
 	}
 
