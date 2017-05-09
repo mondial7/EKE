@@ -55,6 +55,7 @@ class EKE_ORM {
 		if ($this->validateTable($table)) {
 
 			$this->table = $table;
+			$this->query->setTable($table);
 
 			return $this;
 
@@ -150,7 +151,7 @@ class EKE_ORM {
 		$this->query->setParameters($options);
 		$this->query->setType('select');
 
-		return $this->query->build()->run();
+		return $this->query->build()->run($this->db);
 
 	}
 

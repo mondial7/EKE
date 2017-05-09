@@ -135,7 +135,6 @@ class EKEQuery {
         $this->table === null) {
 
       throw new Exception("bad query request", 1);
-      exit;
 
     }
 
@@ -300,7 +299,7 @@ class EKEQuery {
    */
   private function append($property) {
 
-    $p_ = $this->${$property};
+    $p_ = $this->{$property};
 
     if ($p_ !== null) {
 
@@ -382,6 +381,12 @@ class EKEQuery {
 
   }
 
+  public function setTable($t) {
+
+    $this->table = $t;
+
+  }
+
   /**
    * GETTERS
    */
@@ -449,6 +454,12 @@ class EKEQuery {
   public function getType() {
 
     return $this->type;
+
+  }
+
+  public function getTable() {
+
+    return $this->table;
 
   }
 
