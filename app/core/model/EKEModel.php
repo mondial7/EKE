@@ -55,13 +55,13 @@ abstract Class EKEModel {
         if (!isset($this->db)) {
 
             // Get instance from db class
-            $db_instance =  DB::getInstance();
+            $db_instance =  EKEDB::getInstance();
 
             // Create a new connection
             $this->db_instance = $db_instance->connect();
 
             // Instantiate ORM
-            require_once CORE_DIR . '/model/EKE_ORM.php';
+            require_once CORE_DIR . '/database/EKE_ORM.php';
             $this->db = new EKE_ORM($this->db_instance);
 
         }

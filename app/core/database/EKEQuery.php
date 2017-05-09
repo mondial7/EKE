@@ -10,7 +10,7 @@ class EKEQuery {
   /**
    * @var string
    */
-  private $query, $table;
+  private $query, $table, $type;
 
   /**
    * @var matrix
@@ -131,7 +131,7 @@ class EKEQuery {
 
     // do not start execution if values are not set
     if ($this->type === null ||
-        $this->parameters === null ||
+        $this->fields === null ||
         $this->table === null) {
 
       throw new Exception("bad query request", 1);
@@ -144,6 +144,16 @@ class EKEQuery {
       case 'select':
 
         $this->query = "SELECT " . $this->stringifyFields() . " FROM " . $this->table;
+
+        // add requested selection
+        if ($this->use_selection) {
+
+          // stringify parameters
+          // ...
+
+          $this->query = " WHERE " . $parameters_string;
+
+        }
 
         break;
 
@@ -160,13 +170,6 @@ class EKEQuery {
         break;
     }
 
-    // add requested selection
-    if ($this->use_selection) {
-
-      $this->query = " WHERE " . $this->stringifyParameters();
-
-    }
-
     // Append properties
     foreach (['limit','max','min'] as $property) {
 
@@ -174,14 +177,18 @@ class EKEQuery {
 
     }
 
+    // End query
+    $this->query .= ';';
+
     return $this;
 
   }
 
   /**
    * Direct dirty query
-   * Still parametized
+   * Still parametized query support
    *
+   * @return array query result
    */
   public function dirty($query, $params) {
 
@@ -241,27 +248,12 @@ class EKEQuery {
   }
 
   /**
-   * Helper function to add parameters in the query
-   *
-   * @return string
-   */
-  private function stringifyParameters() {
-
-    $parameters = '';
-
-    // ...
-
-    return $parameters;
-
-  }
-
-  /**
    * Validate parameters when they are set
    *
    * @param array parameters
    * @return boolean
    */
-  private function validateParameters() {
+  private function validateParameters($params) {
 
     $is_valid = false;
 
@@ -277,11 +269,24 @@ class EKEQuery {
    * @param array fields
    * @return boolean
    */
-  private function validateFields() {
+  private function validateFields($fields) {
 
     $is_valid = false;
 
-    // ...
+    foreach ($fields as $field) {
+
+      foreach ($this->parameters_whitelist as $key => $value) {
+
+        if ($key == $field) {
+
+          $is_valid = true;
+          break;
+
+        }
+
+      }
+
+    }
 
     return $is_valid;
 
@@ -371,6 +376,12 @@ class EKEQuery {
 
   }
 
+  public function setType($t) {
+
+    $this->type = $t;
+
+  }
+
   /**
    * GETTERS
    */
@@ -432,6 +443,12 @@ class EKEQuery {
   public function getFields() {
 
     return $this->fields;
+
+  }
+
+  public function getType() {
+
+    return $this->type;
 
   }
 

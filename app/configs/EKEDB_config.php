@@ -12,3 +12,12 @@ define("DB_DATABASE", "eke_db");
 define("DB_TABLE_PREFIX", "eke__");
 
 define("_T_ACCOUNT", DB_TABLE_PREFIX . "account");
+
+$DB_TABLES_LIST = [
+
+  "eke__account" => [
+                      'id' => 'i',
+                      'username' => 's'
+                    ]
+
+];

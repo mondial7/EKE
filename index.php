@@ -3,7 +3,7 @@
 /**
  * Define development mode
  */
-define("DEV_MODE", "off");  
+define("DEV_MODE", "off");
 
 
 /**
@@ -42,6 +42,11 @@ Dump_Router::route('/',[
   'controller' => "landing"
 ]);
 
+
+Dump_Router::route('try',[
+  'controller' => "orm_try"
+]);
+
 /**
  * Declare routes where router will not apply
  * Currently helpful for ajax direct calls to controllers
@@ -52,7 +57,7 @@ Dump_Router::noRoute('app');
 /**
  * Trigger the router and evaluate the uri path
  */
-require Dump_Router::loadController($_SERVER['REQUEST_URI'], 
+require Dump_Router::loadController($_SERVER['REQUEST_URI'],
                                     "./app/controllers/pages/");
 
 
@@ -69,7 +74,7 @@ if (defined("DEV_MODE") && DEV_MODE === "on" && isset($_GET['dev'])) {
     'total_peak' => round((memory_get_peak_usage(true)/1024/1024), 3)
 
   ];
-  
+
   EKETwig::setDir(VIEWS_DIR . "/components/");
   EKETwig::show("memory_monitor_dev.twig", $template_variables);
 

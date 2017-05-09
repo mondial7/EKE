@@ -36,9 +36,6 @@ class EKE_ORM {
 		// Load tables whitelist
 		$this->loadTablesWhitelist();
 
-		// Load parameters whitelist
-		$this->loadParamtersWhitelist();
-
 		// Instantiaze the Query
 		require_once CORE_DIR . '/database/EKEQuery.php';
 		$this->query = new EKEQuery($this->parameters_whitelist);
@@ -106,6 +103,7 @@ class EKE_ORM {
 		foreach ($DB_TABLES_LIST as $key => $value) {
 
 			$this->tables_whitelist[] = $key;
+			$this->parameters_whitelist[] = $value;
 
 		}
 
@@ -132,6 +130,8 @@ class EKE_ORM {
 
 		$this->query->setFields($fields);
 
+		return $this;
+
 	}
 
 	/**
@@ -145,9 +145,10 @@ class EKE_ORM {
 	 * @param array
 	 * @return array
 	 */
-	public function search($options) {
+	public function search($options = null) {
 
 		$this->query->setParameters($options);
+		$this->query->setType('select');
 
 		return $this->query->build()->run();
 
