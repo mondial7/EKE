@@ -9,11 +9,15 @@ class ORMTry extends EKEModel {
     // Declare database connection
     $this->connectDB();
 
+    // Define Accound DB table (apply immediately filters)
+    $this->account = $this->db->in('eke__account')->filter(['id','username']);
+
   }
 
   public function getResult(){
 
-    return $this->db->in('eke__account')->filter(['id','username'])->search();
+    // retrieve all the accounts
+    return $this->account->search();
 
   }
 
