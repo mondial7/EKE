@@ -237,9 +237,13 @@ class EKEQuery {
   private function stringifyFields() {
 
     $fields = '';
+    $n = count($this->fields);
+    $i = 1;
 
     foreach ($this->fields as $value) {
-      $fields .= ',' . $value;
+      $fields .= $value;
+      if ($i !== $n) { $fields .= ','; }
+      $i++;
     }
 
     return $fields;
