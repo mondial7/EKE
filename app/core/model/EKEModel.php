@@ -9,14 +9,21 @@ abstract Class EKEModel {
     /**
      * Database connection
      *
-     * @var Object mysqli
+     * @var Object MySQLi
+     */
+    private $db_instance = null;
+
+    /**
+     * ORM instance
+     *
+     * @var Object EKE_ORM
      */
     protected $db = null;
 
     /**
      * LogModel instance
      *
-     * @var Object LogModel
+     * @var Object EKELog
      */
     protected $LOG = null;
 
@@ -51,7 +58,11 @@ abstract Class EKEModel {
             $db_instance =  DB::getInstance();
 
             // Create a new connection
-            $this->db = $db_instance->connect();
+            $this->db_instance = $db_instance->connect();
+
+            // Instantiate ORM
+            require_once CORE_DIR . '/model/EKE_ORM.php';
+            $this->db = new EKE_ORM($this->db_instance);
 
         }
 
@@ -66,7 +77,7 @@ abstract Class EKEModel {
     protected function closeDB(){
 
         // Close database connection if exists
-        return (isset($this->db) && $this->db->close());
+        return (isset($this->db_instance) && $this->db_instance->close());
 
     }
 
