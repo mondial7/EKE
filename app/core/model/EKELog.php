@@ -102,6 +102,7 @@ class EKELog {
     }
 
 		$log = [
+						'time' => time(),
 						'target' => $this->log_target,
 		 				'data' => $this->log_data,
 						'url' => $_SERVER['REQUEST_URI'],
