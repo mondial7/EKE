@@ -6,10 +6,10 @@
  */
 if ($_SERVER['HTTP_HOST'] === "localhost") {
 
-  $template_variables['website_url'] = "//localhost/EKE/";
+  $template_variables['website_url'] = '//localhost/EKE/';
 
 } else {
 
-  $template_variables['website_url'] = "https://eke.mondspace.com/";
+  $template_variables['website_url'] = 'https://eke.mondspace.com/';
 
 }

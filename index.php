@@ -24,7 +24,7 @@ require CONTROLLERS_DIR . '/_session.php';
  * Define routes
  */
 Dump_Router::route('/',[
-  'controller' => "landing"
+  'controller' => 'landing'
 ]);
 
 
@@ -39,4 +39,4 @@ Dump_Router::noRoute('app');
  * Trigger the router and evaluate the uri path
  */
 require Dump_Router::loadController($_SERVER['REQUEST_URI'],
-                                    "./app/controllers/pages/");
+                                    './app/controllers/pages/');
