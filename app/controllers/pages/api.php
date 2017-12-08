@@ -6,43 +6,19 @@
 
 /**
  * First level whitelist ('features whitelist')
- * Each feature has a folder in the API folder.
+ * NOTE Each feature has a folder in the API folder.
  */
-$feature_whitelist = ['auth','search','blog'];
+$feature_whitelist = ['auth','blog'];
+
 /**
  * Actions whitelists
- * Each action is link to a feature: see variable names
- * The action name is the class name of the controller to be executed
+ * NOTE Each action is link to a feature: see variable names
+ * The action name is the class name of the api controller to be executed
  */
 $auth_whitelist = ['signin','signout','signup'];
-$auth_whitelist = ['users'];
 $blog_whitelist = ['articles'];
 
 /**
- * Default instantiation and call to API Controllers
- *
- * @todo Generalize and move this part in the core, called by the router, so that the api controller is a reserved controller by default with possibility to rename it.
+ * Include Api controller script
  */
-
-// Validate whitelists
-if (!isset($_GET['feature']) ||
-    !isset($_GET['action'])) {
-
-      // Default error answer
-    	exit("{'error':'Wrong request'}");
-
-} else if (!in_array($_GET['feature'], $feature_whitelist) ||
-  		     !in_array($_GET['action'], ${$_GET['feature'] . "_whitelist"})) {
-
-      // Default error answer
-    	exit("{'error':'Access forbidden'}");
-
-} else {
-
-  $partial_path = $_GET['feature'] . DIRECTORY_SEPARATOR . $_GET['action'] . ".php";
-
-}
-
-// include api script/class and execute it
-include_once API_DIR . DIRECTORY_SEPARATOR . $partial_path;
-(new $_GET['action']())->run()->answer();
+require_once CONTROLLERS_DIR . '/_api.php';
