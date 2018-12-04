@@ -2,3 +2,5 @@ app/vendor/
 app/core/logs/
 
 .DS_Store
+sonar-project.properties
+.scannerwork
